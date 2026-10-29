@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Provider Dashboard - CineSpots</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+  <div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar">
+      <div class="sidebar-header">
+        <a class="sidebar-brand" href="../index.html">
+          <span class="brand-badge"><i class="bi bi-film"></i></span>
+          <span>Cine<span class="text-danger">Spots</span></span>
+        </a>
+        <span class="sidebar-role-tag role-tag-provider">Provider</span>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li class="nav-section-title">Operations</li>
+        <li class="sidebar-item">
+          <a class="sidebar-link active" href="dashboard.html">
+            <i class="bi bi-speedometer2"></i> Overview
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="shows.html">
+            <i class="bi bi-calendar-event"></i> Manage Shows
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="bookings.html">
+            <i class="bi bi-journal-text"></i> Cinema Bookings
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="cinema.html">
+            <i class="bi bi-building-gear"></i> Cinema Profile
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="analytics.html">
+            <i class="bi bi-graph-up-arrow"></i> Revenue Analytics
+          </a>
+        </li>
+
+        <li class="nav-section-title">Switch Mode</li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="../index.html">
+            <i class="bi bi-house-door"></i> Customer Storefront
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center gap-2">
+            <div class="nav-user-avatar">MV</div>
+            <div class="overflow-hidden">
+              <div class="fw-bold small text-truncate">Marcus Vance</div>
+              <div class="text-muted" style="font-size: 0.72rem;">Cinema Partner</div>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-link text-danger p-0" onclick="CineAuth.logout()" title="Sign Out">
+            <i class="bi bi-box-arrow-right fs-5"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+      <!-- Topbar -->
+      <header class="dashboard-topbar">
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-sm btn-light d-lg-none" type="button" onclick="document.querySelector('.dashboard-sidebar').classList.toggle('show')">
+            <i class="bi bi-list fs-5"></i>
+          </button>
+          <div class="d-flex align-items-center gap-2">
+            <span class="small fw-bold text-muted d-none d-md-inline">Managing Cinema:</span>
+            <select class="form-select form-select-sm border-secondary-subtle" id="provider-cinema-select" style="min-width: 240px;">
+              <!-- Loaded dynamically -->
+            </select>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <a href="shows.html" class="btn btn-cine-primary btn-sm">
+            <i class="bi bi-plus-circle me-1"></i> Schedule Show
+          </a>
+        </div>
+      </header>
+
+      <!-- Dashboard Body -->
+      <div class="dashboard-body">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+          <div>
+            <h1 class="h3 fw-bold text-dark mb-1">Cinema Management Overview</h1>
+            <p class="text-secondary small mb-0">Real-time box office admissions, schedules, and screen occupancy</p>
+          </div>
+        </div>
+
+        <!-- Metric KPI Cards -->
+        <div class="row g-3 mb-4">
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-title">Daily Box Office</span>
+                <i class="bi bi-cash-stack stat-meta-icon"></i>
+              </div>
+              <div class="stat-value" id="stat-today-revenue">₹0.00</div>
+              <div class="stat-delta-row">
+                <span class="kpi-delta positive"><i class="bi bi-arrow-up-short"></i> +14.2%</span>
+                <span class="kpi-context">vs prior cycle</span>
+              </div>
+              <div class="mini-progress-track">
+                <div class="mini-progress-fill" style="width: 82%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-title">Admissions Issued</span>
+                <i class="bi bi-ticket-perforated stat-meta-icon"></i>
+              </div>
+              <div class="stat-value" id="stat-today-bookings">0</div>
+              <div class="stat-delta-row">
+                <span class="kpi-delta positive"><i class="bi bi-arrow-up-short"></i> +8.5%</span>
+                <span class="kpi-context">ticket velocity</span>
+              </div>
+              <div class="mini-progress-track">
+                <div class="mini-progress-fill" style="width: 65%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-title">Active Screenings</span>
+                <i class="bi bi-play-circle stat-meta-icon"></i>
+              </div>
+              <div class="stat-value" id="stat-active-shows">0</div>
+              <div class="stat-delta-row">
+                <span class="kpi-delta neutral">Across All Halls</span>
+                <span class="kpi-context">live on circuit</span>
+              </div>
+              <div class="mini-progress-track">
+                <div class="mini-progress-fill" style="width: 90%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-title">Auditorium Seat Yield</span>
+                <i class="bi bi-pie-chart stat-meta-icon"></i>
+              </div>
+              <div class="stat-value" id="stat-occupancy-rate">0%</div>
+              <div class="stat-delta-row">
+                <span class="kpi-delta positive"><i class="bi bi-arrow-up-short"></i> +5.0%</span>
+                <span class="kpi-context">peak 91% evenings</span>
+              </div>
+              <div class="mini-progress-track">
+                <div class="mini-progress-fill rose" style="width: 78%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="row g-4 mb-4">
+          <div class="col-12 col-lg-8">
+            <div class="chart-box">
+              <div class="chart-header">
+                <div>
+                  <span class="stat-title">7-Day Ticket Revenue Curve</span>
+                  <div class="chart-subline">Daily box office intake across all scheduled showtimes</div>
+                </div>
+                <span class="badge bg-light text-secondary border">Trailing 7 Days</span>
+              </div>
+              <div style="height: 240px; position: relative;">
+                <canvas id="chartProviderRevenue"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-4">
+            <div class="chart-box">
+              <div class="chart-header">
+                <div>
+                  <span class="stat-title">Live Seat Utilization</span>
+                  <div class="chart-subline">Admitted vs available capacity</div>
+                </div>
+                <span class="badge bg-light text-secondary border">Real-Time</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-center" style="height: 240px; position: relative;">
+                <canvas id="chartProviderOccupancy"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Bookings Table -->
+        <div class="table-card">
+          <div class="table-card-header">
+            <div>
+              <h5 class="h6 fw-bold text-dark mb-0">Recent Box Office Bookings</h5>
+              <div class="small text-muted">Live customer ticket admissions for this cinema</div>
+            </div>
+            <a href="bookings.html" class="btn btn-sm btn-outline-secondary">View All Bookings</a>
+          </div>
+
+          <div class="table-responsive">
+            <table class="cine-table">
+              <thead>
+                <tr>
+                  <th>Booking ID</th>
+                  <th>Customer</th>
+                  <th>Movie & Show</th>
+                  <th>Seats</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="provider-recent-bookings-tbody">
+                <tr>
+                  <td><code>CS-89412</code></td>
+                  <td><strong>Rahul Sharma</strong></td>
+                  <td>Dune: Part Two</td>
+                  <td>06:00 PM</td>
+                  <td>B4, B5</td>
+                  <td class="fw-bold">₹706.00</td>
+                  <td><span class="badge bg-success">Confirmed</span></td>
+                </tr>
+                <tr>
+                  <td><code>CS-89410</code></td>
+                  <td><strong>Sneha Roy</strong></td>
+                  <td>Dune: Part Two</td>
+                  <td>06:00 PM</td>
+                  <td>C1, C2</td>
+                  <td class="fw-bold">₹826.00</td>
+                  <td><span class="badge bg-success">Confirmed</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

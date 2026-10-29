@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Console - CineSpots</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+
+<body>
+
+  <div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar">
+      <div class="sidebar-header">
+        <a class="sidebar-brand" href="../index.html">
+          <span class="brand-badge"><i class="bi bi-film"></i></span>
+          <span>Cine<span class="text-danger">Spots</span></span>
+        </a>
+        <span class="sidebar-role-tag role-tag-admin">Super Admin</span>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li class="nav-section-title">Platform Administration</li>
+        <li class="sidebar-item">
+          <a class="sidebar-link active" href="dashboard.html">
+            <i class="bi bi-speedometer2"></i> Global Overview
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="users.html">
+            <i class="bi bi-people"></i> Users & Customers
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="providers.html">
+            <i class="bi bi-person-workspace"></i> Cinema Providers
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="cinemas.html">
+            <i class="bi bi-buildings"></i> Cinemas & Theatres
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="movies.html">
+            <i class="bi bi-film"></i> Movie Catalog
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="bookings.html">
+            <i class="bi bi-receipt-cutoff"></i> All Bookings
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="analytics.html">
+            <i class="bi bi-pie-chart"></i> Platform Analytics
+          </a>
+        </li>
+
+        <li class="nav-section-title">Navigation</li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="../index.html">
+            <i class="bi bi-house-door"></i> Customer Storefront
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center gap-2">
+            <div class="nav-user-avatar" style="background: #fdf2f8; color: #be185d;">SJ</div>
+            <div class="overflow-hidden">
+              <div class="fw-bold small text-truncate">Sarah Jenkins</div>
+              <div class="text-muted" style="font-size: 0.72rem;">Super Admin</div>
+            </div>
+          </div>
+          <a class="btn btn-sm btn-link text-danger p-0" href="../pages/login.html" onclick="if(typeof CineAuth !== 'undefined') CineAuth.logout();" title="Sign Out">
+            <i class="bi bi-box-arrow-right fs-5"></i>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+      <header class="dashboard-topbar">
+        <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-sm btn-light d-lg-none" type="button"
+            onclick="document.querySelector('.dashboard-sidebar').classList.toggle('show')">
+            <i class="bi bi-list fs-5"></i>
+          </button>
+          <h2 class="h5 fw-bold text-dark mb-0">Platform Overview & Metrics</h2>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <button type="button" class="btn btn-sm btn-outline-secondary"
+            onclick="CineStorage.resetToDefaults(); window.location.reload();">
+            <i class="bi bi-arrow-counterclockwise me-1"></i> Reset Demo Store
+          </button>
+        </div>
+      </header>
+
+      <div class="dashboard-body">
+        <!-- Global KPI Metrics -->
+        <div class="row g-3 mb-4">
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-title">Platform Gross Inflow</span>
+                <i class="bi bi-graph-up stat-meta-icon"></i>
+              </div>
+              <div class="stat-value" id="kpi-total-revenue">₹0.00</div>
+              <div class="stat-delta-row">
+                <span class="kpi-delta positive"><i class="bi bi-arrow-up-short"></i> +21.4%</span>
+                <span class="kpi-context">trailing 30 days</span>
+              </div>
+              <div class="mini-progress-track">
+                <div class="mini-progress-fill" style="width: 84%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-title">Registered Patrons</span>
+                <i class="bi bi-people stat-meta-icon"></i>
+              </div>
+              <div class="stat-value" id="kpi-total-users">0</div>
+              <div class="stat-delta-row">
+                <span class="kpi-delta positive"><i class="bi bi-arrow-up-short"></i> +12.3%</span>
+                <span class="kpi-context">active profiles</span>
+              </div>
+              <div class="mini-progress-track">
+                <div class="mini-progress-fill" style="width: 68%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-title">Theatrical Venues</span>
+                <i class="bi bi-buildings stat-meta-icon"></i>
+              </div>
+              <div class="stat-value" id="kpi-total-cinemas">0</div>
+              <div class="stat-delta-row">
+                <span class="kpi-delta neutral"><span id="kpi-total-providers">0</span> Verified Partners</span>
+                <span class="kpi-context">100% active</span>
+              </div>
+              <div class="mini-progress-track">
+                <div class="mini-progress-fill" style="width: 100%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-title">Active Features</span>
+                <i class="bi bi-film stat-meta-icon"></i>
+              </div>
+              <div class="stat-value" id="kpi-total-movies">0</div>
+              <div class="stat-delta-row">
+                <span class="kpi-delta positive"><i class="bi bi-play-fill"></i> <span id="kpi-active-shows">0</span>
+                  Screenings</span>
+                <span class="kpi-context">live circuit</span>
+              </div>
+              <div class="mini-progress-track">
+                <div class="mini-progress-fill rose" style="width: 76%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="row g-4 mb-4">
+          <div class="col-12 col-lg-8">
+            <div class="chart-box">
+              <div class="chart-header">
+                <div>
+                  <span class="stat-title">Platform Ticket Sales Trajectory</span>
+                  <div class="chart-subline">Monthly ticket admissions and concession inflows across the network</div>
+                </div>
+                <span class="badge bg-light text-secondary border">2026 YTD</span>
+              </div>
+              <div style="height: 240px; position: relative;">
+                <canvas id="chartAdminMonthly"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-4">
+            <div class="chart-box">
+              <div class="chart-header">
+                <div>
+                  <span class="stat-title">Cinema Network Share</span>
+                  <div class="chart-subline">Market allocation by attendance volume</div>
+                </div>
+                <span class="badge bg-light text-secondary border">Consolidated</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-center" style="height: 240px; position: relative;">
+                <canvas id="chartCinemaShare"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Platform Activity Table -->
+        <div class="table-card">
+          <div class="table-card-header">
+            <div>
+              <h5 class="h6 fw-bold text-dark mb-0">Recent Platform Transactions</h5>
+              <div class="small text-muted">Auditorium bookings processed across all partner cinemas</div>
+            </div>
+            <a href="bookings.html" class="btn btn-sm btn-outline-secondary">View Global Ledger</a>
+          </div>
+
+          <div class="table-responsive">
+            <table class="cine-table">
+              <thead>
+                <tr>
+                  <th>Booking ID</th>
+                  <th>Customer</th>
+                  <th>Cinema & Movie</th>
+                  <th>Seats</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="admin-recent-bookings-tbody">
+                <tr>
+                  <td><code>CS-89412</code></td>
+                  <td><strong>Rahul Sharma</strong><br><span class="text-muted small">rahul@example.com</span></td>
+                  <td>PVR ICON<br><span class="small text-muted">Dune: Part Two</span></td>
+                  <td>B4, B5 (2)</td>
+                  <td class="fw-bold">₹706.00</td>
+                  <td><span class="badge bg-success">Confirmed</span></td>
+                </tr>
+                <tr>
+                  <td><code>CS-89409</code></td>
+                  <td><strong>Priya Patel</strong><br><span class="text-muted small">priya@example.com</span></td>
+                  <td>INOX Megaplex<br><span class="small text-muted">Oppenheimer</span></td>
+                  <td>D1, D2 (2)</td>
+                  <td class="fw-bold">₹826.00</td>
+                  <td><span class="badge bg-success">Confirmed</span></td>
+                </tr>
+                <tr>
+                  <td><code>CS-89405</code></td>
+                  <td><strong>Amit Verma</strong><br><span class="text-muted small">amit@example.com</span></td>
+                  <td>Cinepolis VIP<br><span class="small text-muted">Spider-Man</span></td>
+                  <td>A3, A4 (2)</td>
+                  <td class="fw-bold">₹1,180.00</td>
+                  <td><span class="badge bg-success">Confirmed</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+
+</html>

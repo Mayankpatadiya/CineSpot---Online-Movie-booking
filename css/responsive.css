@@ -1,0 +1,172 @@
+/* ==========================================================================
+   CINESPOTS - RESPONSIVE STYLES (Desktop, Tablet, Mobile)
+   ========================================================================== */
+
+/* Tablet & Smaller (<= 991px) */
+@media (max-width: 991.98px) {
+  .hero-overlay {
+    padding: 2.5rem 1.75rem;
+  }
+
+  .hero-title {
+    font-size: 2.15rem;
+  }
+
+  .hero-description {
+    font-size: 0.92rem;
+  }
+
+  /* Dashboard mobile sidebar */
+  .dashboard-sidebar {
+    position: fixed;
+    left: -270px;
+    top: 0;
+    bottom: 0;
+    z-index: 1045;
+    box-shadow: var(--shadow-xl);
+  }
+
+  .dashboard-sidebar.show {
+    left: 0;
+  }
+
+  .sidebar-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.4);
+    z-index: 1040;
+  }
+
+  .sidebar-backdrop.show {
+    display: block;
+  }
+
+  .dashboard-topbar {
+    padding: 0 1rem;
+  }
+
+  .dashboard-body {
+    padding: 1.25rem 1rem;
+  }
+
+  /* Booking Steps */
+  .step-label {
+    display: none;
+  }
+
+  .nav-search-wrap {
+    min-width: 100%;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Mobile Devices (<= 767px) */
+@media (max-width: 767.98px) {
+  .hero-cinema-wrap {
+    margin: 1rem 0 1.5rem;
+  }
+
+  .hero-overlay {
+    padding: 2rem 1.25rem;
+  }
+
+  .hero-title {
+    font-size: 1.75rem;
+  }
+
+  .hero-meta {
+    gap: 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  /* Seat Grid Responsive Scaling */
+  .guest-banner-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  #cinema-seating-grid {
+    overflow-x: auto;
+    width: 100%;
+    padding-bottom: 0.5rem;
+  }
+
+  .seat-tier-block {
+    min-width: 440px;
+  }
+
+  .seat-unit {
+    width: 28px;
+    height: 28px;
+    font-size: 0.68rem;
+  }
+
+  .seat-unit.vip {
+    width: 30px;
+  }
+
+  .seat-row-label {
+    width: 18px;
+    font-size: 0.72rem;
+  }
+
+  .seat-aisle-gap {
+    width: 14px;
+  }
+
+  .seat-legend-row {
+    gap: 0.75rem;
+  }
+
+  /* Sticky summary bar on mobile */
+  .sticky-booking-bar {
+    padding: 0.75rem 0;
+  }
+
+  .summary-bar-content {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .summary-bar-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Digital ticket mobile */
+  .digital-ticket-container {
+    margin: 1rem 0;
+  }
+
+  .ticket-body {
+    padding: 1.25rem;
+  }
+
+  /* Floating role button on small screens */
+  .demo-role-floating-btn {
+    bottom: 16px;
+    right: 16px;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.78rem;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+  }
+}

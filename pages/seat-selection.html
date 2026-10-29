@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Seats - CineSpots</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <style>
+    .seat-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .seat-row-label {
+      width: 24px;
+      font-weight: 700;
+      color: #64748b;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+    .seat-box {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease;
+    }
+    .seat-box:hover:not(.occupied) {
+      border-color: #991b1b;
+      color: #991b1b;
+      transform: scale(1.08);
+    }
+    .seat-box.selected {
+      background: #991b1b !important;
+      color: #ffffff !important;
+      border-color: #991b1b !important;
+    }
+    .seat-box.occupied {
+      background: #e2e8f0 !important;
+      color: #94a3b8 !important;
+      border-color: #cbd5e1 !important;
+      cursor: not-allowed;
+    }
+    .seat-box.vip {
+      border: 1.5px solid #d97706;
+      background: #fffdfa;
+    }
+    .tier-header {
+      width: 100%;
+      text-align: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #64748b;
+      border-bottom: 1px dashed #e2e8f0;
+      padding-bottom: 0.35rem;
+      margin: 1rem 0 0.75rem;
+    }
+  </style>
+</head>
+<body class="bg-body">
+
+  <!-- Global Header Navigation -->
+  <nav class="cine-navbar navbar navbar-expand-lg">
+    <div class="container">
+      <a class="brand-logo" href="../index.html">
+        <span class="brand-badge"><i class="bi bi-film"></i></span>
+        <span>Cine<span class="highlight">Spots</span></span>
+      </a>
+
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#cineNavContent" aria-controls="cineNavContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="cineNavContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4 gap-lg-1">
+          <li class="nav-item">
+            <a class="nav-link" href="../index.html">
+              <i class="bi bi-house-door me-1"></i> Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="movies.html">
+              <i class="bi bi-camera-reels me-1"></i> Movies
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="cinemas.html">
+              <i class="bi bi-buildings me-1"></i> Cinemas
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="offers.html">
+              <i class="bi bi-tag me-1"></i> Offers
+            </a>
+          </li>
+        </ul>
+
+        <div class="d-flex align-items-center gap-2">
+          <a href="login.html" class="btn btn-cine-outline btn-sm">
+            <i class="bi bi-box-arrow-in-right"></i> Sign In
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-4">
+    <!-- Active Show Context Card -->
+    <div class="card p-3 mb-4 border-subtle bg-white shadow-xs">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <h2 class="h5 fw-bold text-dark mb-1">Dune: Part Two • IMAX 70mm</h2>
+          <div class="small text-muted">PVR ICON - Phoenix Palladium • Audi 1 (Laser IMAX)</div>
+        </div>
+        <div class="text-md-end">
+          <div class="fw-bold text-danger">Today, 06:00 PM</div>
+          <a href="movie-details.html" class="small text-secondary"><i class="bi bi-arrow-left"></i> Change Show</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main 2-Column Split: Seating Arena & Booking Summary -->
+    <div class="row g-4 align-items-start">
+      <!-- Left Column: Cinema Screen & Seating Grid -->
+      <div class="col-12 col-lg-8">
+        <div class="card p-4 border shadow-xs bg-white">
+          <!-- Curved Screen Visual Indicator -->
+          <div class="screen-indicator-wrap">
+            <div class="screen-curve-glow"></div>
+            <div class="screen-indicator-title">
+              ALL EYES THIS WAY • CINEMA SCREEN
+            </div>
+          </div>
+
+          <!-- Tiered Seat Grid -->
+          <div id="cinema-seating-grid" class="d-flex flex-column align-items-center">
+            <!-- VIP Recliner Tier -->
+            <div class="tier-header">VIP Plush Recliners (₹500)</div>
+            <div class="seat-row">
+              <span class="seat-row-label">A</span>
+              <div class="seat-box vip" data-seat-id="A1" data-price="500">1</div>
+              <div class="seat-box vip" data-seat-id="A2" data-price="500">2</div>
+              <div class="seat-box vip occupied" data-seat-id="A3" data-price="500">3</div>
+              <div class="seat-box vip occupied" data-seat-id="A4" data-price="500">4</div>
+              <div class="seat-box vip ms-3" data-seat-id="A5" data-price="500">5</div>
+              <div class="seat-box vip" data-seat-id="A6" data-price="500">6</div>
+              <div class="seat-box vip" data-seat-id="A7" data-price="500">7</div>
+              <div class="seat-box vip" data-seat-id="A8" data-price="500">8</div>
+            </div>
+
+            <!-- Prime Tier -->
+            <div class="tier-header">Prime Tier (₹350)</div>
+            <div class="seat-row">
+              <span class="seat-row-label">B</span>
+              <div class="seat-box" data-seat-id="B1" data-price="350">1</div>
+              <div class="seat-box" data-seat-id="B2" data-price="350">2</div>
+              <div class="seat-box" data-seat-id="B3" data-price="350">3</div>
+              <div class="seat-box selected" data-seat-id="B4" data-price="350">4</div>
+              <div class="seat-box selected" data-seat-id="B5" data-price="350">5</div>
+              <div class="seat-box ms-3" data-seat-id="B6" data-price="350">6</div>
+              <div class="seat-box" data-seat-id="B7" data-price="350">7</div>
+              <div class="seat-box" data-seat-id="B8" data-price="350">8</div>
+              <div class="seat-box occupied" data-seat-id="B9" data-price="350">9</div>
+              <div class="seat-box occupied" data-seat-id="B10" data-price="350">10</div>
+            </div>
+
+            <div class="seat-row">
+              <span class="seat-row-label">C</span>
+              <div class="seat-box" data-seat-id="C1" data-price="350">1</div>
+              <div class="seat-box" data-seat-id="C2" data-price="350">2</div>
+              <div class="seat-box occupied" data-seat-id="C3" data-price="350">3</div>
+              <div class="seat-box occupied" data-seat-id="C4" data-price="350">4</div>
+              <div class="seat-box" data-seat-id="C5" data-price="350">5</div>
+              <div class="seat-box ms-3" data-seat-id="C6" data-price="350">6</div>
+              <div class="seat-box" data-seat-id="C7" data-price="350">7</div>
+              <div class="seat-box" data-seat-id="C8" data-price="350">8</div>
+              <div class="seat-box" data-seat-id="C9" data-price="350">9</div>
+              <div class="seat-box" data-seat-id="C10" data-price="350">10</div>
+            </div>
+
+            <div class="seat-row">
+              <span class="seat-row-label">D</span>
+              <div class="seat-box" data-seat-id="D1" data-price="350">1</div>
+              <div class="seat-box" data-seat-id="D2" data-price="350">2</div>
+              <div class="seat-box" data-seat-id="D3" data-price="350">3</div>
+              <div class="seat-box" data-seat-id="D4" data-price="350">4</div>
+              <div class="seat-box" data-seat-id="D5" data-price="350">5</div>
+              <div class="seat-box ms-3" data-seat-id="D6" data-price="350">6</div>
+              <div class="seat-box" data-seat-id="D7" data-price="350">7</div>
+              <div class="seat-box" data-seat-id="D8" data-price="350">8</div>
+              <div class="seat-box" data-seat-id="D9" data-price="350">9</div>
+              <div class="seat-box" data-seat-id="D10" data-price="350">10</div>
+            </div>
+
+            <!-- Classic Tier -->
+            <div class="tier-header">Classic Tier (₹250)</div>
+            <div class="seat-row">
+              <span class="seat-row-label">E</span>
+              <div class="seat-box" data-seat-id="E1" data-price="250">1</div>
+              <div class="seat-box" data-seat-id="E2" data-price="250">2</div>
+              <div class="seat-box" data-seat-id="E3" data-price="250">3</div>
+              <div class="seat-box" data-seat-id="E4" data-price="250">4</div>
+              <div class="seat-box ms-3" data-seat-id="E5" data-price="250">5</div>
+              <div class="seat-box" data-seat-id="E6" data-price="250">6</div>
+              <div class="seat-box occupied" data-seat-id="E7" data-price="250">7</div>
+              <div class="seat-box occupied" data-seat-id="E8" data-price="250">8</div>
+            </div>
+
+            <div class="seat-row">
+              <span class="seat-row-label">F</span>
+              <div class="seat-box" data-seat-id="F1" data-price="250">1</div>
+              <div class="seat-box" data-seat-id="F2" data-price="250">2</div>
+              <div class="seat-box" data-seat-id="F3" data-price="250">3</div>
+              <div class="seat-box" data-seat-id="F4" data-price="250">4</div>
+              <div class="seat-box ms-3" data-seat-id="F5" data-price="250">5</div>
+              <div class="seat-box" data-seat-id="F6" data-price="250">6</div>
+              <div class="seat-box" data-seat-id="F7" data-price="250">7</div>
+              <div class="seat-box" data-seat-id="F8" data-price="250">8</div>
+            </div>
+          </div>
+
+          <!-- Seat Status Legend -->
+          <div class="seat-legend-row mt-4">
+            <div class="legend-item">
+              <div class="legend-box" style="border: 1px solid #cbd5e1; background: #ffffff;"></div>
+              <span>Available</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-box" style="background: #991b1b; border: 1px solid #991b1b;"></div>
+              <span>Selected</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-box" style="background: #e2e8f0; border: 1px solid #cbd5e1;"></div>
+              <span>Occupied</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-box" style="border: 1.5px solid #d97706; background: #fffdfa;"></div>
+              <span>VIP Recliner</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Booking Summary Sidebar -->
+      <div class="col-12 col-lg-4">
+        <div class="booking-summary-sidebar p-3 shadow-xs bg-white rounded border">
+          <!-- Sidebar Header -->
+          <div class="d-flex align-items-center gap-2 border-bottom pb-3">
+            <i class="bi bi-receipt-cutoff text-danger fs-5"></i>
+            <h3 class="h6 fw-bold text-dark mb-0">Booking Summary</h3>
+          </div>
+
+          <!-- Selected Seats Section -->
+          <div class="my-3">
+            <div class="small text-secondary mb-1">Seats Selected:</div>
+            <div class="fw-bold text-dark" id="sidebar-seats-label">2 Seat(s)</div>
+            <div id="sidebar-seats-chips" class="d-flex flex-wrap gap-1 mt-2">
+              <span class="badge bg-danger">B4</span>
+              <span class="badge bg-danger">B5</span>
+            </div>
+          </div>
+
+          <!-- Line Items Breakdown -->
+          <div class="py-2 border-top border-bottom">
+            <div class="d-flex justify-content-between py-1 small">
+              <span class="text-secondary">Tickets Subtotal:</span>
+              <span class="fw-bold text-dark" id="sidebar-tickets-subtotal">₹700</span>
+            </div>
+            <div class="d-flex justify-content-between py-1 small">
+              <span class="text-secondary">Convenience Fee:</span>
+              <span class="fw-bold text-dark">₹30</span>
+            </div>
+            <div class="d-flex justify-content-between py-1 small">
+              <span class="text-secondary">Taxes & GST (18%):</span>
+              <span class="fw-bold text-dark" id="sidebar-fees-gst">₹126</span>
+            </div>
+            <div class="d-flex justify-content-between pt-2 mt-1 border-top align-items-center">
+              <span class="fw-bold text-dark">Total Amount:</span>
+              <span class="h5 fw-bold mb-0 text-danger" id="sidebar-total-amount">₹856</span>
+            </div>
+          </div>
+
+          <!-- Apply Discount Code -->
+          <div class="my-3">
+            <label for="sidebar-promo-input" class="small fw-semibold text-secondary mb-1">Apply Discount Code</label>
+            <div class="input-group input-group-sm">
+              <input type="text" id="sidebar-promo-input" class="form-control text-uppercase" placeholder="e.g. CINEFIRST20" value="CINEFIRST20">
+              <button class="btn btn-outline-dark" type="button" onclick="CineUI.showToast('Promo code applied! Saved ₹150.', 'success')">Apply</button>
+            </div>
+          </div>
+
+          <!-- Action Button -->
+          <a href="payment.html" id="sidebar-proceed-btn" class="btn btn-cine-primary w-100 py-2 fw-semibold mt-2 text-center">
+            Proceed to Payment <i class="bi bi-arrow-right ms-1"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="cine-footer mt-5">
+    <div class="container text-center text-muted small">
+      &copy; 2026 CineSpots Cinema Booking. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- Only Necessary Scripts Required for the Website -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/validation.js"></script>
+</body>
+</html>

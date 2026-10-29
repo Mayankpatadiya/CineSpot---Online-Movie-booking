@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cinema Analytics - Provider Portal</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+  <div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar">
+      <div class="sidebar-header">
+        <a class="sidebar-brand" href="../index.html">
+          <span class="brand-badge"><i class="bi bi-film"></i></span>
+          <span>Cine<span class="text-danger">Spots</span></span>
+        </a>
+        <span class="sidebar-role-tag role-tag-provider">Provider</span>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li class="nav-section-title">Operations</li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="dashboard.html">
+            <i class="bi bi-speedometer2"></i> Overview
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="shows.html">
+            <i class="bi bi-calendar-event"></i> Manage Shows
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="bookings.html">
+            <i class="bi bi-journal-text"></i> Cinema Bookings
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="cinema.html">
+            <i class="bi bi-building-gear"></i> Cinema Profile
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link active" href="analytics.html">
+            <i class="bi bi-graph-up-arrow"></i> Revenue Analytics
+          </a>
+        </li>
+
+        <li class="nav-section-title">Switch Mode</li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="../index.html">
+            <i class="bi bi-house-door"></i> Customer Storefront
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center gap-2">
+            <div class="nav-user-avatar">MV</div>
+            <div class="overflow-hidden">
+              <div class="fw-bold small text-truncate">Marcus Vance</div>
+              <div class="text-muted" style="font-size: 0.72rem;">Cinema Partner</div>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-link text-danger p-0" onclick="CineAuth.logout()" title="Sign Out">
+            <i class="bi bi-box-arrow-right fs-5"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+      <header class="dashboard-topbar">
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-sm btn-light d-lg-none" type="button" onclick="document.querySelector('.dashboard-sidebar').classList.toggle('show')">
+            <i class="bi bi-list fs-5"></i>
+          </button>
+          <div>
+            <h1 class="h6 fw-bold text-dark mb-0">Cinema Box Office & Yield Analytics</h1>
+            <div class="text-muted" style="font-size: 0.75rem;">PVR INOX: Phoenix Palladium, Lower Parel • Operational Metrics</div>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <div class="time-range-group d-none d-md-inline-flex">
+            <button type="button" class="time-range-btn" onclick="switchProviderRange(this, '24h')">24H</button>
+            <button type="button" class="time-range-btn" onclick="switchProviderRange(this, '7d')">7D</button>
+            <button type="button" class="time-range-btn active" onclick="switchProviderRange(this, '30d')">30D</button>
+            <button type="button" class="time-range-btn" onclick="switchProviderRange(this, '90d')">90D</button>
+          </div>
+        </div>
+      </header>
+
+      <div class="dashboard-body">
+        <!-- Executive KPI Strip -->
+        <div class="row g-3 mb-4">
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-title">Period Box Office</span>
+                <i class="bi bi-cash-stack stat-meta-icon"></i>
+              </div>
+              <div class="stat-value">₹3,42,850<span class="text-muted fs-6 fw-normal">.00</span></div>
+              <div class="stat-delta-row">
+                <span class="kpi-delta positive"><i class="bi bi-arrow-up-short"></i> +14.2%</span>
+                <span class="kpi-context">vs prior cycle</span>
+              </div>
+              <div class="mini-progress-track">
+                <div class="mini-progress-fill" style="width: 82%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-title">Admissions Issued</span>
+                <i class="bi bi-ticket-perforated stat-meta-icon"></i>
+              </div>
+              <div class="stat-value">18,420</div>
+              <div class="stat-delta-row">
+                <span class="kpi-delta positive"><i class="bi bi-arrow-up-short"></i> +9.1%</span>
+                <span class="kpi-context">avg. ₹380 / ticket</span>
+              </div>
+              <div class="mini-progress-track">
+                <div class="mini-progress-fill" style="width: 71%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-title">Seat Occupancy</span>
+                <i class="bi bi-pie-chart stat-meta-icon"></i>
+              </div>
+              <div class="stat-value">84.2<span class="text-muted fs-6 fw-normal">%</span></div>
+              <div class="stat-delta-row">
+                <span class="kpi-delta positive"><i class="bi bi-arrow-up-short"></i> +6.8%</span>
+                <span class="kpi-context">peak 94.1% prime</span>
+              </div>
+              <div class="mini-progress-track">
+                <div class="mini-progress-fill rose" style="width: 84.2%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-title">Concessions Attachment</span>
+                <i class="bi bi-cup-straw stat-meta-icon"></i>
+              </div>
+              <div class="stat-value">48.5<span class="text-muted fs-6 fw-normal">%</span></div>
+              <div class="stat-delta-row">
+                <span class="kpi-delta positive"><i class="bi bi-arrow-up-short"></i> +11.4%</span>
+                <span class="kpi-context">avg. basket: ₹450</span>
+              </div>
+              <div class="mini-progress-track">
+                <div class="mini-progress-fill" style="width: 65%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="row g-3 mb-4">
+          <div class="col-12 col-lg-8">
+            <div class="chart-box">
+              <div class="chart-header">
+                <div>
+                  <span class="stat-title">Daily Box Office Revenue Trajectory</span>
+                  <div class="chart-headline-val">₹3,42,850.00</div>
+                  <div class="chart-subline">Revenue performance across weekdays and peak weekend prime screenings</div>
+                </div>
+              </div>
+              <div style="height: 250px; position: relative;">
+                <canvas id="chartProviderVelocity"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-4">
+            <div class="chart-box">
+              <div class="chart-header">
+                <div>
+                  <span class="stat-title">Seat Occupancy Efficiency</span>
+                  <div class="chart-headline-val">84.2% Occupied</div>
+                  <div class="chart-subline">Active capacity utilization</div>
+                </div>
+              </div>
+              <div style="height: 210px; position: relative;" class="d-flex align-items-center justify-content-center">
+                <canvas id="chartProviderOccupancyDonut"></canvas>
+              </div>
+              <div class="mt-3 pt-2 border-top d-flex justify-content-around text-muted small">
+                <span><i class="bi bi-circle-fill text-dark me-1" style="font-size: 0.6rem;"></i> Occupied (84.2%)</span>
+                <span><i class="bi bi-circle-fill text-black-50 me-1" style="font-size: 0.6rem;"></i> Available (15.8%)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen Performance Table & Showtime Index -->
+        <div class="row g-3">
+          <div class="col-12 col-lg-7">
+            <div class="table-card h-100">
+              <div class="table-card-header">
+                <div>
+                  <h2 class="h6 fw-bold text-dark mb-0">Auditorium Performance Breakdown</h2>
+                  <div class="small text-muted">Screen format yield, admissions, and revenue distribution</div>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="cine-table">
+                  <thead>
+                    <tr>
+                      <th>Auditorium</th>
+                      <th>Format</th>
+                      <th>Capacity</th>
+                      <th>Occupancy</th>
+                      <th class="text-end">Gross Revenue</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="fw-bold text-dark">Auditorium 1</td>
+                      <td><span class="badge bg-light text-dark border">IMAX Laser</span></td>
+                      <td>64 Seats</td>
+                      <td>
+                        <div class="d-flex align-items-center gap-2">
+                          <span class="small fw-bold">92.4%</span>
+                          <div class="mini-progress-track m-0" style="width: 50px;">
+                            <div class="mini-progress-fill rose" style="width: 92.4%;"></div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="text-end fw-bold text-dark">₹1,56,200</td>
+                    </tr>
+                    <tr>
+                      <td class="fw-bold text-dark">Auditorium 2</td>
+                      <td><span class="badge bg-light text-dark border">Dolby Atmos 4K</span></td>
+                      <td>48 Seats</td>
+                      <td>
+                        <div class="d-flex align-items-center gap-2">
+                          <span class="small fw-bold">84.8%</span>
+                          <div class="mini-progress-track m-0" style="width: 50px;">
+                            <div class="mini-progress-fill" style="width: 84.8%;"></div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="text-end fw-bold text-dark">₹1,08,400</td>
+                    </tr>
+                    <tr>
+                      <td class="fw-bold text-dark">Auditorium 3</td>
+                      <td><span class="badge bg-light text-dark border">INSIGNIA Luxe</span></td>
+                      <td>32 Seats</td>
+                      <td>
+                        <div class="d-flex align-items-center gap-2">
+                          <span class="small fw-bold">88.0%</span>
+                          <div class="mini-progress-track m-0" style="width: 50px;">
+                            <div class="mini-progress-fill rose" style="width: 88%;"></div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="text-end fw-bold text-dark">₹78,250</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-5">
+            <div class="chart-box">
+              <div class="chart-header">
+                <div>
+                  <span class="stat-title">Showtime Peak Velocity</span>
+                  <div class="chart-headline-val">07:45 PM Peak</div>
+                  <div class="chart-subline">Admissions demand curve by hour slot</div>
+                </div>
+              </div>
+              <div style="height: 180px; position: relative;">
+                <canvas id="chartShowtimePeak"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/storage.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    Chart.defaults.font.family = "'Plus Jakarta Sans', -apple-system, sans-serif";
+    Chart.defaults.color = '#64748b';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initProviderCharts();
+    });
+
+    function initProviderCharts() {
+      // 1. Daily revenue line chart
+      const ctxRev = document.getElementById('chartProviderVelocity');
+      if (ctxRev) {
+        new Chart(ctxRev, {
+          type: 'line',
+          data: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [{
+              label: 'Daily Gross (₹)',
+              data: [28400, 31200, 34800, 38100, 68900, 78400, 63050],
+              borderColor: '#0f172a',
+              backgroundColor: 'rgba(15, 23, 42, 0.04)',
+              borderWidth: 2.2,
+              fill: true,
+              tension: 0.35,
+              pointRadius: 0,
+              pointHoverRadius: 5,
+              pointHoverBackgroundColor: '#0f172a'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: '#0f172a',
+                padding: 10,
+                cornerRadius: 6,
+                callbacks: {
+                  label: ctx => ` Box Office: ₹${ctx.raw.toLocaleString('en-IN')}`
+                }
+              }
+            },
+            scales: {
+              y: {
+                grid: { color: '#f1f5f9' },
+                ticks: { callback: v => '₹' + (v >= 100000 ? (v / 100000) + 'L' : (v / 1000) + 'k') }
+              },
+              x: {
+                grid: { display: false }
+              }
+            }
+          }
+        });
+      }
+
+      // 2. Occupancy Donut
+      const ctxOcc = document.getElementById('chartProviderOccupancyDonut');
+      if (ctxOcc) {
+        new Chart(ctxOcc, {
+          type: 'doughnut',
+          data: {
+            labels: ['Occupied Seats', 'Available Open'],
+            datasets: [{
+              data: [84.2, 15.8],
+              backgroundColor: ['#0f172a', '#e2e8f0'],
+              borderWidth: 0,
+              hoverOffset: 3
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '78%',
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: '#0f172a',
+                callbacks: {
+                  label: ctx => ` ${ctx.label}: ${ctx.raw}%`
+                }
+              }
+            }
+          }
+        });
+      }
+
+      // 3. Showtime peak bar
+      const ctxPeak = document.getElementById('chartShowtimePeak');
+      if (ctxPeak) {
+        new Chart(ctxPeak, {
+          type: 'bar',
+          data: {
+            labels: ['10:30 AM', '01:15 PM', '04:30 PM', '07:45 PM', '10:30 PM'],
+            datasets: [{
+              label: 'Admissions Index',
+              data: [28, 48, 62, 94, 52],
+              backgroundColor: '#0f172a',
+              borderRadius: 4,
+              barThickness: 20
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              y: {
+                grid: { color: '#f1f5f9' }
+              },
+              x: {
+                grid: { display: false }
+              }
+            }
+          }
+        });
+      }
+    }
+
+    function switchProviderRange(btn, r) {
+      document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      CineApp.showToast(`Updated cinema metrics for: ${r.toUpperCase()}`, 'info');
+    }
+  </script>
+</body>
+</html>

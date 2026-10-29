@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Providers - Admin Console</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+  <div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar">
+      <div class="sidebar-header">
+        <a class="sidebar-brand" href="../index.html">
+          <span class="brand-badge"><i class="bi bi-film"></i></span>
+          <span>Cine<span class="text-danger">Spots</span></span>
+        </a>
+        <span class="sidebar-role-tag role-tag-admin">Super Admin</span>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li class="nav-section-title">Platform Administration</li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="dashboard.html">
+            <i class="bi bi-speedometer2"></i> Global Overview
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="users.html">
+            <i class="bi bi-people"></i> Users & Customers
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link active" href="providers.html">
+            <i class="bi bi-person-workspace"></i> Cinema Providers
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="cinemas.html">
+            <i class="bi bi-buildings"></i> Cinemas & Theatres
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="movies.html">
+            <i class="bi bi-film"></i> Movie Catalog
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="bookings.html">
+            <i class="bi bi-receipt-cutoff"></i> All Bookings
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="analytics.html">
+            <i class="bi bi-pie-chart"></i> Platform Analytics
+          </a>
+        </li>
+
+        <li class="nav-section-title">Navigation</li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="../index.html">
+            <i class="bi bi-house-door"></i> Customer Storefront
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center gap-2">
+            <div class="nav-user-avatar" style="background: #fdf2f8; color: #be185d;">SJ</div>
+            <div class="overflow-hidden">
+              <div class="fw-bold small text-truncate">Sarah Jenkins</div>
+              <div class="text-muted" style="font-size: 0.72rem;">Super Admin</div>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-link text-danger p-0" onclick="CineAuth.logout()" title="Sign Out">
+            <i class="bi bi-box-arrow-right fs-5"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+      <header class="dashboard-topbar">
+        <h2 class="h5 fw-bold text-dark mb-0">Authorized Cinema Providers</h2>
+        <button type="button" class="btn btn-cine-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addProviderModal">
+          <i class="bi bi-plus-lg me-1"></i> Register New Provider
+        </button>
+      </header>
+
+      <div class="dashboard-body">
+        <div class="table-card">
+          <div class="table-responsive">
+            <table class="cine-table">
+              <thead>
+                <tr>
+                  <th>Provider</th>
+                  <th>Organization</th>
+                  <th>Contact Email</th>
+                  <th>Phone</th>
+                  <th>Assigned Cinemas</th>
+                  <th>Status</th>
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-providers-tbody">
+                <!-- Dynamically loaded -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Add Provider Modal -->
+  <div class="modal fade" id="addProviderModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg">
+        <div class="modal-header border-bottom">
+          <h5 class="modal-title fw-bold text-dark"><i class="bi bi-person-plus text-danger me-2"></i>Register Cinema Provider</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form onsubmit="handleNewProviderSubmit(event)">
+          <div class="modal-body p-4">
+            <div class="mb-3">
+              <label for="new-prov-name" class="form-label small fw-bold text-dark">Executive Name</label>
+              <input type="text" id="new-prov-name" class="form-control" placeholder="e.g. David Vance" required>
+            </div>
+            <div class="mb-3">
+              <label for="new-prov-org" class="form-label small fw-bold text-dark">Cinema Chain / Company</label>
+              <input type="text" id="new-prov-org" class="form-control" placeholder="e.g. Crown Theatres Media" required>
+            </div>
+            <div class="row g-2 mb-3">
+              <div class="col-6">
+                <label for="new-prov-email" class="form-label small fw-bold text-dark">Business Email</label>
+                <input type="email" id="new-prov-email" class="form-control" placeholder="david@crown.com" required>
+              </div>
+              <div class="col-6">
+                <label for="new-prov-phone" class="form-label small fw-bold text-dark">Phone Number</label>
+                <input type="tel" id="new-prov-phone" class="form-control" placeholder="+1 555-019-1122" required>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-top">
+            <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-sm btn-cine-primary">Authorize Provider</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/storage.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/validation.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderProvidersTable();
+    });
+
+    function renderProvidersTable() {
+      const tbody = document.getElementById('admin-providers-tbody');
+      if (!tbody) return;
+
+      const providers = CineStorage.getUsers().filter(u => u.role === 'provider');
+      const cinemas = CineStorage.getCinemas();
+
+      tbody.innerHTML = providers.map(p => {
+        const assigned = cinemas.filter(c => (p.assignedCinemas || []).includes(c.id));
+        return `
+          <tr>
+            <td>
+              <div class="fw-bold text-dark">${p.name}</div>
+              <div class="small text-muted font-monospace">${p.id}</div>
+            </td>
+            <td><div class="fw-semibold text-dark">${p.organization || 'Independent Operator'}</div></td>
+            <td>${p.email}</td>
+            <td>${p.phone || 'N/A'}</td>
+            <td>
+              ${assigned.length > 0 
+                ? assigned.map(c => `<span class="badge bg-light text-dark border me-1">${c.name}</span>`).join('')
+                : '<span class="text-muted small">None assigned</span>'}
+            </td>
+            <td><span class="badge-status ${p.status}">${p.status}</span></td>
+            <td class="text-end">
+              <button class="btn btn-sm ${p.status === 'active' ? 'btn-outline-danger' : 'btn-outline-success'}" onclick="toggleProviderStatus('${p.id}')">
+                ${p.status === 'active' ? 'Deactivate' : 'Activate'}
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function toggleProviderStatus(id) {
+      const user = CineStorage.getUserById(id);
+      if (user) {
+        user.status = user.status === 'active' ? 'disabled' : 'active';
+        CineStorage.saveUser(user);
+        CineApp.showToast(`Provider status updated to: ${user.status}`, 'info');
+        renderProvidersTable();
+      }
+    }
+
+    function handleNewProviderSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('new-prov-name').value.trim();
+      const org = document.getElementById('new-prov-org').value.trim();
+      const email = document.getElementById('new-prov-email').value.trim();
+      const phone = document.getElementById('new-prov-phone').value.trim();
+
+      const newProv = {
+        id: 'prov-' + Date.now(),
+        name: name,
+        email: email,
+        phone: phone,
+        role: 'provider',
+        status: 'active',
+        organization: org,
+        assignedCinemas: []
+      };
+
+      CineStorage.saveUser(newProv);
+      CineApp.showToast('Provider authorized successfully!', 'success');
+
+      const modal = bootstrap.Modal.getInstance(document.getElementById('addProviderModal'));
+      if (modal) modal.hide();
+
+      renderProvidersTable();
+    }
+  </script>
+</body>
+</html>

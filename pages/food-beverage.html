@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food & Beverages - CineSpots</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body class="bg-body pb-5">
+
+  <!-- Global Header Navigation -->
+  <nav class="cine-navbar navbar navbar-expand-lg">
+    <div class="container">
+      <a class="brand-logo" href="../index.html">
+        <span class="brand-badge"><i class="bi bi-film"></i></span>
+        <span>Cine<span class="highlight">Spots</span></span>
+      </a>
+
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#cineNavContent" aria-controls="cineNavContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="cineNavContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4 gap-lg-1">
+          <li class="nav-item">
+            <a class="nav-link" href="../index.html">
+              <i class="bi bi-house-door me-1"></i> Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="movies.html">
+              <i class="bi bi-camera-reels me-1"></i> Movies
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="cinemas.html">
+              <i class="bi bi-buildings me-1"></i> Cinemas
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="offers.html">
+              <i class="bi bi-tag me-1"></i> Offers
+            </a>
+          </li>
+        </ul>
+
+        <div class="d-flex align-items-center gap-2">
+          <a href="login.html" class="btn btn-cine-outline btn-sm">
+            <i class="bi bi-box-arrow-in-right"></i> Sign In
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-4">
+    <!-- Booking Progress Tracker -->
+    <div class="booking-progress-steps">
+      <div class="step-item completed">
+        <div class="step-circle"><i class="bi bi-check-lg"></i></div>
+        <div class="step-label">1. Select Seats</div>
+      </div>
+      <div class="step-item active">
+        <div class="step-circle"><i class="bi bi-cup-straw"></i></div>
+        <div class="step-label">2. Food & Drinks</div>
+      </div>
+      <div class="step-item">
+        <div class="step-circle"><i class="bi bi-receipt"></i></div>
+        <div class="step-label">3. Summary</div>
+      </div>
+      <div class="step-item">
+        <div class="step-circle"><i class="bi bi-credit-card"></i></div>
+        <div class="step-label">4. Payment</div>
+      </div>
+    </div>
+
+    <!-- Section Header -->
+    <div class="section-header">
+      <div>
+        <h1 class="h3 fw-bold text-dark mb-1">Cinema Concessions & Treats</h1>
+        <p class="section-subtitle">Preorder fresh cinema snacks & have them ready at your seat</p>
+      </div>
+      <a href="booking-summary.html" class="btn btn-outline-secondary btn-sm">
+        Skip Concessions <i class="bi bi-chevron-right"></i>
+      </a>
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="filter-chips-wrap">
+      <button class="filter-chip active">All Snacks</button>
+      <button class="filter-chip">Popcorn</button>
+      <button class="filter-chip">Gourmet Snacks</button>
+      <button class="filter-chip">Drinks</button>
+      <button class="filter-chip">Blockbuster Combos</button>
+    </div>
+
+    <!-- F&B Catalog Grid -->
+    <div class="row g-4" id="fnb-catalog-grid">
+      <!-- Item 1 -->
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="card p-3 border-subtle bg-white shadow-xs h-100 d-flex flex-column">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25">Best Seller</span>
+            <span class="fw-bold text-dark">₹250</span>
+          </div>
+          <h4 class="h6 fw-bold text-dark mb-1">Large Caramel Popcorn</h4>
+          <p class="text-secondary small mb-3">Freshly popped premium corn glazed in warm buttery caramel.</p>
+          <div class="mt-auto d-flex align-items-center justify-content-between pt-2 border-top">
+            <span class="small text-muted">Tub (180g)</span>
+            <button type="button" class="btn btn-cine-light btn-sm" onclick="CineUI.showToast('Added Large Caramel Popcorn to order', 'success')">
+              <i class="bi bi-plus-lg"></i> Add
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="card p-3 border-subtle bg-white shadow-xs h-100 d-flex flex-column">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <span class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25">Popular</span>
+            <span class="fw-bold text-dark">₹220</span>
+          </div>
+          <h4 class="h6 fw-bold text-dark mb-1">Loaded Cheese Nachos</h4>
+          <p class="text-secondary small mb-3">Crispy tortilla chips served with hot jalapeño cheddar dip & salsa.</p>
+          <div class="mt-auto d-flex align-items-center justify-content-between pt-2 border-top">
+            <span class="small text-muted">Portion (200g)</span>
+            <button type="button" class="btn btn-cine-light btn-sm" onclick="CineUI.showToast('Added Cheese Nachos to order', 'success')">
+              <i class="bi bi-plus-lg"></i> Add
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="card p-3 border-subtle bg-white shadow-xs h-100 d-flex flex-column">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <span class="badge bg-secondary bg-opacity-10 text-secondary border">Beverage</span>
+            <span class="fw-bold text-dark">₹90</span>
+          </div>
+          <h4 class="h6 fw-bold text-dark mb-1">Fountain Coca-Cola</h4>
+          <p class="text-secondary small mb-3">Chilled fountain soda served over crushed ice.</p>
+          <div class="mt-auto d-flex align-items-center justify-content-between pt-2 border-top">
+            <span class="small text-muted">Cup (500ml)</span>
+            <button type="button" class="btn btn-cine-light btn-sm" onclick="CineUI.showToast('Added Coca-Cola to order', 'success')">
+              <i class="bi bi-plus-lg"></i> Add
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 4 -->
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="card p-3 border-subtle bg-white shadow-xs h-100 d-flex flex-column">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25">Combo</span>
+            <span class="fw-bold text-dark">₹420</span>
+          </div>
+          <h4 class="h6 fw-bold text-dark mb-1">Couple Movie Feast Combo</h4>
+          <p class="text-secondary small mb-3">1 Jumbo Butter Popcorn + 2 Cold Drinks + 1 Salted Fries.</p>
+          <div class="mt-auto d-flex align-items-center justify-content-between pt-2 border-top">
+            <span class="small text-muted">Serves 2</span>
+            <button type="button" class="btn btn-cine-light btn-sm" onclick="CineUI.showToast('Added Couple Feast Combo to order', 'success')">
+              <i class="bi bi-plus-lg"></i> Add
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky Bottom Summary Bar -->
+  <div class="position-fixed bottom-0 start-0 w-100 bg-white border-top py-3 shadow-lg" style="z-index: 1020;">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+        <div>
+          <div class="small fw-bold text-muted">Selected Preorders</div>
+          <div class="small text-secondary">
+            Concessions Total: <strong class="text-dark">₹430.00</strong>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <a href="booking-summary.html" class="btn btn-outline-secondary btn-sm">
+            Skip
+          </a>
+          <a href="booking-summary.html" class="btn btn-cine-primary">
+            Continue to Order Summary <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Only Necessary Scripts Required for the Website -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/validation.js"></script>
+</body>
+</html>

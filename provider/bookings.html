@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cinema Bookings - Provider Portal</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+  <div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar">
+      <div class="sidebar-header">
+        <a class="sidebar-brand" href="../index.html">
+          <span class="brand-badge"><i class="bi bi-film"></i></span>
+          <span>Cine<span class="text-danger">Spots</span></span>
+        </a>
+        <span class="sidebar-role-tag role-tag-provider">Provider</span>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li class="nav-section-title">Operations</li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="dashboard.html">
+            <i class="bi bi-speedometer2"></i> Overview
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="shows.html">
+            <i class="bi bi-calendar-event"></i> Manage Shows
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link active" href="bookings.html">
+            <i class="bi bi-journal-text"></i> Cinema Bookings
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="cinema.html">
+            <i class="bi bi-building-gear"></i> Cinema Profile
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="analytics.html">
+            <i class="bi bi-graph-up-arrow"></i> Revenue Analytics
+          </a>
+        </li>
+
+        <li class="nav-section-title">Switch Mode</li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="../index.html">
+            <i class="bi bi-house-door"></i> Customer Storefront
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center gap-2">
+            <div class="nav-user-avatar">MV</div>
+            <div class="overflow-hidden">
+              <div class="fw-bold small text-truncate">Marcus Vance</div>
+              <div class="text-muted" style="font-size: 0.72rem;">Cinema Partner</div>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-link text-danger p-0" onclick="CineAuth.logout()" title="Sign Out">
+            <i class="bi bi-box-arrow-right fs-5"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+      <header class="dashboard-topbar">
+        <h2 class="h5 fw-bold text-dark mb-0">Auditorium Admission Bookings</h2>
+      </header>
+
+      <div class="dashboard-body">
+        <div class="table-card">
+          <div class="table-card-header">
+            <div class="position-relative" style="min-width: 280px;">
+              <i class="bi bi-search position-absolute top-50 translate-middle-y text-muted ms-3"></i>
+              <input type="text" id="prov-booking-search" class="form-control form-control-sm ps-5" placeholder="Search by Booking ID, customer or movie...">
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="cine-table">
+              <thead>
+                <tr>
+                  <th>Booking ID</th>
+                  <th>Customer Information</th>
+                  <th>Movie & Screen</th>
+                  <th>Date & Time</th>
+                  <th>Seats</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="provider-bookings-tbody">
+                <!-- Dynamically loaded -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/storage.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/provider.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      CineProvider.initBookingsPage();
+    });
+  </script>
+</body>
+</html>

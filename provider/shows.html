@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Shows - Provider Portal</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+  <div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar">
+      <div class="sidebar-header">
+        <a class="sidebar-brand" href="../index.html">
+          <span class="brand-badge"><i class="bi bi-film"></i></span>
+          <span>Cine<span class="text-danger">Spots</span></span>
+        </a>
+        <span class="sidebar-role-tag role-tag-provider">Provider</span>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li class="nav-section-title">Operations</li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="dashboard.html">
+            <i class="bi bi-speedometer2"></i> Overview
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link active" href="shows.html">
+            <i class="bi bi-calendar-event"></i> Manage Shows
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="bookings.html">
+            <i class="bi bi-journal-text"></i> Cinema Bookings
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="cinema.html">
+            <i class="bi bi-building-gear"></i> Cinema Profile
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="analytics.html">
+            <i class="bi bi-graph-up-arrow"></i> Revenue Analytics
+          </a>
+        </li>
+
+        <li class="nav-section-title">Switch Mode</li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="../index.html">
+            <i class="bi bi-house-door"></i> Customer Storefront
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center gap-2">
+            <div class="nav-user-avatar">MV</div>
+            <div class="overflow-hidden">
+              <div class="fw-bold small text-truncate">Marcus Vance</div>
+              <div class="text-muted" style="font-size: 0.72rem;">Cinema Partner</div>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-link text-danger p-0" onclick="CineAuth.logout()" title="Sign Out">
+            <i class="bi bi-box-arrow-right fs-5"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+      <header class="dashboard-topbar">
+        <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-sm btn-light d-lg-none" type="button" onclick="document.querySelector('.dashboard-sidebar').classList.toggle('show')">
+            <i class="bi bi-list fs-5"></i>
+          </button>
+          <h2 class="h5 fw-bold text-dark mb-0">Auditorium Show Schedules</h2>
+        </div>
+
+        <button type="button" class="btn btn-cine-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addShowModal">
+          <i class="bi bi-plus-lg me-1"></i> Schedule New Show
+        </button>
+      </header>
+
+      <div class="dashboard-body">
+        <div class="table-card">
+          <div class="table-card-header">
+            <div>
+              <h5 class="h6 fw-bold text-dark mb-0">Scheduled Shows</h5>
+              <div class="small text-muted">Active screening times, screens, pricing, and live seat occupancy</div>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="cine-table">
+              <thead>
+                <tr>
+                  <th>Movie</th>
+                  <th>Screen & Format</th>
+                  <th>Date & Time</th>
+                  <th>Ticket Pricing</th>
+                  <th style="min-width: 140px;">Occupancy</th>
+                  <th>Status</th>
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="provider-shows-tbody">
+                <!-- Dynamically loaded -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Add Show Modal -->
+  <div class="modal fade" id="addShowModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg">
+        <div class="modal-header border-bottom">
+          <h5 class="modal-title fw-bold text-dark"><i class="bi bi-calendar-plus text-danger me-2"></i>Schedule New Show</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form onsubmit="event.preventDefault(); CineProvider.handleAddShowSubmit();">
+          <div class="modal-body p-4">
+            <div class="mb-3">
+              <label for="modal-show-movie" class="form-label small fw-bold text-dark">Select Movie</label>
+              <select id="modal-show-movie" class="form-select" required></select>
+            </div>
+
+            <div class="mb-3">
+              <label for="modal-show-screen" class="form-label small fw-bold text-dark">Select Screen / Auditorium</label>
+              <select id="modal-show-screen" class="form-select" required></select>
+            </div>
+
+            <div class="row g-2 mb-3">
+              <div class="col-6">
+                <label for="modal-show-date" class="form-label small fw-bold text-dark">Show Date</label>
+                <input type="date" id="modal-show-date" class="form-control" required>
+              </div>
+              <div class="col-6">
+                <label for="modal-show-time" class="form-label small fw-bold text-dark">Show Time</label>
+                <input type="text" id="modal-show-time" class="form-control" placeholder="e.g. 07:45 PM" value="07:45 PM" required>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="modal-show-price" class="form-label small fw-bold text-dark">Base Ticket Price (₹)</label>
+              <input type="number" step="10" id="modal-show-price" class="form-control" value="350" required>
+              <div class="form-text small">VIP recliner pricing will automatically be calculated as Base + ₹150.00.</div>
+            </div>
+          </div>
+          <div class="modal-footer border-top">
+            <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-sm btn-cine-primary">Confirm & Publish Show</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/storage.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/validation.js"></script>
+  <script src="../js/provider.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Set default show date to tomorrow
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const dateInput = document.getElementById('modal-show-date');
+      if (dateInput) dateInput.value = tomorrow.toISOString().split('T')[0];
+
+      CineProvider.initShowsPage();
+    });
+  </script>
+</body>
+</html>
