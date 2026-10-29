@@ -310,24 +310,19 @@
     };
 
     form.addEventListener('submit', (event) => {
-      event.preventDefault();
-
       if (!validateForm(form)) {
-        return;
+        event.preventDefault();
+        event.stopImmediatePropagation();
       }
+    }, true);
 
-      const handler = customHandlers[form.id];
-      if (handler) {
+    const handler = customHandlers[form.id];
+    if (handler) {
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
         handler();
-        return;
-      }
-
-      if (window.CineUI && window.CineUI.showToast) {
-        window.CineUI.showToast('Form submitted successfully.', 'success');
-      } else {
-        alert('Form submitted successfully.');
-      }
-    });
+      });
+    }
   }
 
   document.addEventListener('DOMContentLoaded', () => {
